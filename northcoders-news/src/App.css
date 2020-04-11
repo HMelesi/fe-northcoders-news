@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Junge&display=swap");
+
+body {
+  background-image: url("./background.png");
+  background-repeat: repeat;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.App {
+  min-width: 80vw;
+  font-family: "Junge", serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: white;
+  padding: 10px;
+}
+
+.header__text {
+  max-width: 200px;
+}
+
+.navbar {
+  background-color: white;
+  padding: 10px;
+}
+
+.navbar__container {
+  border-top: solid #fe5f55 2px;
+}
+
+.navbar__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 5px;
+}
+
+.content {
+  background-color: white;
+  margin-top: 20px;
+}
+
+.content__container {
+  padding: 5px;
+}
+
+.content__articlelist {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.content__articletitle {
+  background-color: #fe5f55;
+  color: white;
+  margin: 5px;
+  padding: 0px 10px 0px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
