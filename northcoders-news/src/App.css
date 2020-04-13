@@ -8,8 +8,23 @@ body {
   justify-content: space-around;
 }
 
+button {
+  color: #fe5f55 !important;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-family: "Junge", serif;
+  font-size: 12pt;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #000000 !important;
+}
+
 .App {
   min-width: 80vw;
+  max-width: 80vw;
   font-family: "Junge", serif;
   display: flex;
   flex-direction: column;
@@ -17,29 +32,37 @@ body {
 
 .header {
   background-color: white;
-  padding: 10px;
+  padding: 10px 20px 10px 20px;
 }
 
 .header__text {
-  max-width: 200px;
+  max-width: 210px;
 }
 
 .navbar {
   background-color: white;
-  padding: 10px;
+  padding: 10px 20px 10px 20px;
 }
 
 .navbar__container {
   border-top: solid #fe5f55 2px;
+  padding: 20px 0px 5px 0px;
+}
+
+.navbar__title {
+  cursor: pointer;
 }
 
 .navbar__list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
   list-style-type: none;
-  padding: 5px;
+  padding: 0px;
+}
+
+.navbar__topic {
+  padding-right: 20px;
 }
 
 .content {
@@ -48,7 +71,7 @@ body {
 }
 
 .content__container {
-  padding: 5px;
+  padding: 10px 20px 10px 20px;
 }
 
 .content__articlelist {
@@ -56,12 +79,63 @@ body {
   padding-left: 0;
 }
 
-.content__articletitle {
+.content__article__title {
   background-color: #fe5f55;
   color: white;
   margin: 5px;
   padding: 0px 10px 0px 10px;
   display: flex;
+
   flex-wrap: wrap;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+.content__article__body {
+  background-color: #faf1ef;
+  color: black;
+  justify-self: stretch;
+  margin: 5px;
+  padding: 10px;
+}
+
+.content__comments {
+  margin: 5px;
+}
+
+.content__comments__title {
+  background-color: #fe5f55;
+  color: white;
+  padding: 10px;
+}
+
+.content__comments__list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.content__comments__list__comment {
+  background-color: #faf1ef;
+  color: black;
+  justify-self: stretch;
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+}
+
+.content__comments__commentlabel {
+  display: flex;
+  margin-left: 30px;
+}
+
+.content__comments__commentinput {
+  margin: 10px;
+  align-self: center;
+  border-bottom: #fe5f55 solid 2px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.content__error__text {
+  color: #fe5f55;
 }
