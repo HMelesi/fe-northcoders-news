@@ -1,12 +1,13 @@
 import "./App.css";
-
+import { Router } from "@reach/router";
 import React, { Component } from "react";
 // import Error from "./components/Error.jsx";
 import NavBar from "./components/NavBar.jsx";
-import ArticleList from "./components/ArticleList.jsx";
+import Homepage from "./components/Homepage";
 import LoggedIn from "./components/LoggedIn.jsx";
 import HeaderText from "./components/HeaderText";
-// import IndividualArticle from "./components/IndividualArticle.jsx";
+import TopicPage from "./components/TopicPage";
+import IndividualArticle from "./components/IndividualArticle.jsx";
 
 class App extends Component {
   state = {
@@ -26,11 +27,12 @@ class App extends Component {
           <LoggedIn user={this.state.user} />
         </header>
         <NavBar />
-        <div className="content">
-          <ArticleList />
-          {/* <IndividualArticle /> */}
+        <Router className="content">
+          <Homepage path="/" />
+          <TopicPage path="/topics/:topic" />
+          <IndividualArticle path="/articles/:article_id" />
           {/* <Error /> */}
-        </div>
+        </Router>
       </div>
     );
   }

@@ -1,39 +1,42 @@
 import React, { Component } from "react";
+import * as api from "../utils/api";
+import Loading from "./Loading";
 
 class Comments extends Component {
+  state = {
+    comments: [],
+    isLoading: true,
+  };
+
+  componentDidMount = () => {
+    const { article_id } = this.props;
+    this.fetchComments(article_id);
+  };
+
   render() {
+    const { comments, isLoading } = this.state;
+    if (isLoading) {
+      return <Loading />;
+    }
     return (
       <div className="content__comments">
-        <p className="content__comments__title">&#123; comments: 2 &#125;</p>
+        <p className="content__comments__title">
+          &#123; comments: {comments.length} &#125;
+        </p>
         <ul className="content__comments__list">
-          <li className="content__comments__list__comment">
-            <h3>&lt; title of the comment /&gt;</h3>
-            <h4>&#123; votes: 18 &#125;</h4>
-            <button>votes + +</button>
-            <button>votes - - </button>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse suscipit sapien ac sodales mollis. Vestibulum metus
-              turpis, sodales nec erat et, eleifend luctus nulla. Etiam
-              efficitur at sem ac interdum. Nunc aliquet posuere mauris. Morbi
-              nisl nisi, finibus sollicitudin vestibulum vel, auctor ut quam.
-              Phasellus ac justo laoreet, hendrerit elit tempus, interdum erat.
-              Proin sodales magna ut venenatis tincidunt. Nulla interdum ex eget
-              risus venenatis accumsan.
-            </p>
-          </li>
-          <li className="content__comments__list__comment">
-            <h3>&lt; title of the next comment /&gt;</h3>
-            <h4>&#123; votes: 2 &#125;</h4>
-            <button>votes + +</button>
-            <button>votes - - </button>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse suscipit sapien ac sodales mollis. Vestibulum metus
-              turpis, sodales nec erat et, eleifend luctus nulla. Etiam
-              efficitur at sem ac interdum.
-            </p>
-          </li>
+          {comments.map((comment) => {
+            const { author, votes, created_at, body, comment_id } = comment;
+            return (
+              <li className="content__comments__list__comment" key={comment_id}>
+                <h3>&lt; {author} /&gt;</h3>
+                <h4>{created_at}</h4>
+                <h4>&#123; votes: {votes} &#125;</h4>
+                <button>votes + +</button>
+                <button>votes - - </button>
+                <p>{body}</p>
+              </li>
+            );
+          })}
         </ul>
         <section>
           <h3>&lt; add a comment /&gt;</h3>
@@ -53,6 +56,12 @@ class Comments extends Component {
       </div>
     );
   }
+
+  fetchComments = (article_id) => {
+    api.getArticleComments(article_id).then((comments) => {
+      this.setState({ comments, isLoading: false });
+    });
+  };
 }
 
 export default Comments;

@@ -1,9 +1,12 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const HeaderText = () => {
   return (
     <div className="header__text">
-      <h1>&lt; northcoders news /&gt;</h1>
+      <Link className="link" to="/">
+        <h1>&lt; northcoders news /&gt;</h1>
+      </Link>
     </div>
   );
 };

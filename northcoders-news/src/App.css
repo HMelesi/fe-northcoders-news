@@ -42,6 +42,14 @@ button:hover {
   max-width: 210px;
 }
 
+.link {
+  text-decoration: none;
+}
+
+.link:visited {
+  text-decoration: none;
+}
+
 .loggedin {
   background-color: white;
   padding: 0px 20px 0px 0px;
@@ -149,6 +157,6 @@ button:hover {
   border-right: none;
 }
 
-.content__error__text {
+.content__message__text {
   color: #fe5f55;
 }

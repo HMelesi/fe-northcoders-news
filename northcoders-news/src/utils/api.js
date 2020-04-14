@@ -10,8 +10,8 @@ export const getTopics = () => {
   });
 };
 
-export const getArticles = () => {
-  return request.get("/articles").then(({ data }) => {
+export const getArticles = (topic) => {
+  return request.get("/articles", { params: { topic } }).then(({ data }) => {
     return data.articles;
   });
 };
