@@ -6,7 +6,7 @@ class IndividualArticle extends Component {
     return (
       <div className="content__container">
         <h3>&lt; the topic /&gt;</h3>
-        <h2>&lt; an individual article /&gt;</h2>
+        <h2 className="content__title">&lt; an individual article /&gt;</h2>
         <h4>&#123; votes: 18, comments: 3 &#125;</h4>
         <button>votes + +</button>
         <button>votes - - </button>

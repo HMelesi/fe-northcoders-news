@@ -33,10 +33,19 @@ button:hover {
 .header {
   background-color: white;
   padding: 10px 20px 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .header__text {
   max-width: 210px;
+}
+
+.loggedin {
+  background-color: white;
+  padding: 0px 20px 0px 0px;
+  align-self: center;
 }
 
 .navbar {
@@ -77,6 +86,10 @@ button:hover {
 .content__articlelist {
   list-style-type: none;
   padding-left: 0;
+}
+
+.content__title {
+  color: #fe5f55;
 }
 
 .content__article__title {

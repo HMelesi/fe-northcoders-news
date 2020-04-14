@@ -6,7 +6,7 @@ class ArticleList extends Component {
   render() {
     return (
       <div className="content__container">
-        <h2>&lt;all articles /&gt;</h2>
+        <h2 className="content__title">&lt;all articles /&gt;</h2>
         <ul className="content__articlelist">
           <li className="content__article__title">
             <h3>first article title</h3>
