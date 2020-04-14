@@ -4,7 +4,7 @@ import ArticleList from "./ArticleList";
 const TopicPage = ({ topic }) => {
   return (
     <div>
-      <h2 className="content__title">&lt; {topic} /&gt;</h2>
+      <h2 className="content__articlelist__title">&lt; {topic} /&gt;</h2>
       <ArticleList topic={topic} />
     </div>
   );

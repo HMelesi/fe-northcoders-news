@@ -22,7 +22,11 @@ class NavBar extends Component {
               <ul className="navbar__list">
                 {topics.map((topic) => {
                   return (
-                    <Link to={`/topics/${topic.slug}`} key={topic.slug}>
+                    <Link
+                      to={`/topics/${topic.slug}`}
+                      key={topic.slug}
+                      className="link__black"
+                    >
                       <li className="navbar__topic">&lt; {topic.slug} /&gt;</li>
                     </Link>
                   );

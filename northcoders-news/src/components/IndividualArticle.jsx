@@ -31,7 +31,7 @@ class IndividualArticle extends Component {
     }
     return (
       <div className="content__container">
-        <Link to={`/topics/${topic}`}>
+        <Link to={`/topics/${topic}`} className="link__black">
           <h3>&lt; {topic} /&gt;</h3>
         </Link>
         <h2 className="content__title">&lt; {title} /&gt;</h2>
@@ -42,7 +42,7 @@ class IndividualArticle extends Component {
         <button>votes + +</button>
         <button>votes - - </button>
         <p className="content__article__body">{body}</p>
-        <Comments article_id={article_id} />
+        <Comments article_id={article_id} comment_count={comment_count} />
       </div>
     );
   }

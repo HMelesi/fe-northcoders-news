@@ -15,13 +15,14 @@ class Comments extends Component {
 
   render() {
     const { comments, isLoading } = this.state;
+    const { comment_count } = this.props;
     if (isLoading) {
       return <Loading />;
     }
     return (
       <div className="content__comments">
         <p className="content__comments__title">
-          &#123; comments: {comments.length} &#125;
+          &#123; comments: {comment_count} &#125;
         </p>
         <ul className="content__comments__list">
           {comments.map((comment) => {

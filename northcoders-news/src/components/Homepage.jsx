@@ -4,7 +4,7 @@ import ArticleList from "./ArticleList";
 const Homepage = () => {
   return (
     <div>
-      <h2 className="content__title">&lt; all articles /&gt;</h2>
+      <h2 className="content__articlelist__title">&lt; all articles /&gt;</h2>
       <ArticleList />
     </div>
   );

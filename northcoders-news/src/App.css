@@ -30,6 +30,26 @@ button:hover {
   flex-direction: column;
 }
 
+.link__black {
+  text-decoration: none;
+  color: #000000;
+}
+
+.link__black:visited {
+  text-decoration: none;
+  color: #000000;
+}
+
+.link__white {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.link__white:visited {
+  text-decoration: none;
+  color: #ffffff;
+}
+
 .header {
   background-color: white;
   padding: 10px 20px 10px 20px;
@@ -40,14 +60,6 @@ button:hover {
 
 .header__text {
   max-width: 210px;
-}
-
-.link {
-  text-decoration: none;
-}
-
-.link:visited {
-  text-decoration: none;
 }
 
 .loggedin {
@@ -94,6 +106,11 @@ button:hover {
 .content__articlelist {
   list-style-type: none;
   padding-left: 0;
+}
+
+.content__articlelist__title {
+  color: #fe5f55;
+  padding: 10px 0px 0px 20px;
 }
 
 .content__title {
