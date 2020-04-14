@@ -28,9 +28,12 @@ class App extends Component {
         </header>
         <NavBar />
         <Router className="content">
-          <Homepage path="/" />
+          <Homepage path="/" user={this.state.user} />
           <TopicPage path="/topics/:topic" />
-          <IndividualArticle path="/articles/:article_id" />
+          <IndividualArticle
+            path="/articles/:article_id"
+            user={this.state.user}
+          />
           {/* <Error /> */}
         </Router>
       </div>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class ArticleSort extends Component {
   render() {
-    const { sort_by, order, handleInputChange, handleInputSubmit } = this.props;
+    const { handleInputChange, handleInputSubmit } = this.props;
 
     return (
       <div>

@@ -42,7 +42,11 @@ class IndividualArticle extends Component {
         <button>votes + +</button>
         <button>votes - - </button>
         <p className="content__article__body">{body}</p>
-        <Comments article_id={article_id} comment_count={comment_count} />
+        <Comments
+          article_id={article_id}
+          comment_count={comment_count}
+          user={this.props.user}
+        />
       </div>
     );
   }
