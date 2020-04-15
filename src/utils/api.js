@@ -30,9 +30,9 @@ export const postArticle = (article) => {
   });
 }; // should it take a topic as an argument, or should the topic be automatically added to the body of the article?
 
-export const patchArticle = (article_id, votes) => {
-  return request.patch(`/articles/${article_id}`, votes).then(({ data }) => {
-    return data.article;
+export const patchVote = (type, id, votes) => {
+  return request.patch(`/${type}s/${id}`, votes).then(({ data }) => {
+    return data[type];
   });
 };
 
@@ -47,12 +47,6 @@ export const postArticleComment = (article_id, newComment) => {
 export const getArticleComments = (article_id) => {
   return request.get(`/articles/${article_id}/comments`).then(({ data }) => {
     return data.comments;
-  });
-};
-
-export const patchArticleComment = (comment_id, votes) => {
-  return request.patch(`/comments/${comment_id}`, votes).then(({ data }) => {
-    return data.comment;
   });
 };
 

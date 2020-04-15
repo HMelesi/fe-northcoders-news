@@ -3,11 +3,13 @@ import * as api from "../utils/api";
 import Loading from "./Loading";
 import AddComment from "./AddComment";
 import { convertDate } from "../utils/utils";
+import Vote from "./Vote";
 
 class Comments extends Component {
   state = {
     comments: [],
     isLoading: true,
+    optimisticComments: 0,
   };
 
   componentDidMount = () => {
@@ -15,7 +17,7 @@ class Comments extends Component {
   };
 
   render() {
-    const { comments, isLoading } = this.state;
+    const { comments, isLoading, optimisticComments } = this.state;
     const { comment_count } = this.props;
     const { username } = this.props.user;
     if (isLoading) {
@@ -24,7 +26,7 @@ class Comments extends Component {
     return (
       <div className="content__comments">
         <p className="content__comments__title">
-          &#123; comments: {comment_count} &#125;
+          &#123; comments: {+comment_count + optimisticComments} &#125;
         </p>
         <ul className="content__comments__list">
           {comments.map((comment) => {
@@ -33,7 +35,7 @@ class Comments extends Component {
               <li className="content__comments__list__comment" key={comment_id}>
                 <h3>&lt; {author} /&gt;</h3>
                 <h4>{convertDate(created_at)}</h4>
-                <h4>&#123; votes: {votes} &#125;</h4>
+
                 {username === author ? (
                   <>
                     <button onClick={this.handleDeleteClick} value={comment_id}>
@@ -41,10 +43,7 @@ class Comments extends Component {
                     </button>
                   </>
                 ) : (
-                  <>
-                    <button>votes + +</button>
-                    <button>votes - - </button>
-                  </>
+                  <Vote votes={votes} id={comment_id} />
                 )}
 
                 <p>{body}</p>
@@ -67,8 +66,11 @@ class Comments extends Component {
   addNewComment = (comment) => {
     const { article_id } = this.props;
     api.postArticleComment(article_id, comment).then((comment) => {
-      this.setState(({ comments }) => {
-        return { comments: [comment, ...comments] };
+      this.setState(({ comments, optimisticComments }) => {
+        return {
+          comments: [comment, ...comments],
+          optimisticComments: optimisticComments + 1,
+        };
       });
     });
   };
@@ -77,12 +79,15 @@ class Comments extends Component {
     event.preventDefault();
     const { value } = event.target;
     api.deleteComment(value).then(() => {
-      this.setState(({ comments }) => {
+      this.setState(({ comments, optimisticComments }) => {
         const deletedId = Number.parseInt(value);
         const remainingComments = comments.filter(
           (comment) => comment.comment_id !== deletedId
         );
-        return { comments: remainingComments };
+        return {
+          comments: remainingComments,
+          optimisticComments: optimisticComments - 1,
+        };
       });
     });
   };
