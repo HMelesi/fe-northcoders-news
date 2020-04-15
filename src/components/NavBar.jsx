@@ -18,7 +18,7 @@ class NavBar extends Component {
       <div className="navbar">
         <nav>
           <div className="navbar__container">
-            <Collapsible trigger="< topics />" className="navbar__title">
+            <Collapsible trigger="< menu />" className="navbar__title">
               <ul className="navbar__list">
                 {topics.map((topic) => {
                   return (
@@ -33,6 +33,13 @@ class NavBar extends Component {
                 })}
               </ul>
             </Collapsible>
+            <Link
+              to="/user/createarticle"
+              className="link__red"
+              topics={this.state.topics}
+            >
+              <p>create an article =></p>
+            </Link>
           </div>
         </nav>
       </div>

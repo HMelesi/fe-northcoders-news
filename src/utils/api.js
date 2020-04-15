@@ -44,8 +44,8 @@ export const postArticleComment = (article_id, newComment) => {
     });
 };
 
-export const getArticleComments = (article_id) => {
-  return request.get(`/articles/${article_id}/comments`).then(({ data }) => {
+export const getArticleComments = (article_id, limit, p) => {
+  return request.get(`/articles/${article_id}/comments`, {params: {limit, p}}).then(({ data }) => {
     return data.comments;
   });
 };

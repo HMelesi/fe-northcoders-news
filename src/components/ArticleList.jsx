@@ -10,7 +10,7 @@ class ArticleList extends Component {
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
-    p: 2,
+    p: 1,
     limit: 10,
   };
 
@@ -75,6 +75,7 @@ class ArticleList extends Component {
             onClick={() => {
               this.handleButtonClick(1);
             }}
+            disabled={articles.length === 0}
           >
             →
           </button>
@@ -91,7 +92,7 @@ class ArticleList extends Component {
 
   handleInputChange = (event) => {
     const { value, name } = event.target;
-    this.setState({ [name]: value, p: 1 });
+    this.setState({ [name]: value });
   };
 
   handleInputSubmit = (event) => {
@@ -99,6 +100,7 @@ class ArticleList extends Component {
     const { topic } = this.props;
     const { sort_by, order, limit, p } = this.state;
     this.fetchArticles(topic, sort_by, order, limit, p);
+    this.setState({ p: 1 });
   };
 
   handleButtonClick = (num) => {

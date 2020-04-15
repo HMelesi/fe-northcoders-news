@@ -10,14 +10,22 @@ class Comments extends Component {
     comments: [],
     isLoading: true,
     optimisticComments: 0,
+    limit: 10,
+    p: 1,
   };
 
   componentDidMount = () => {
     this.fetchComments();
   };
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.state.p !== prevState.p) {
+      this.fetchComments();
+    }
+  };
+
   render() {
-    const { comments, isLoading, optimisticComments } = this.state;
+    const { comments, isLoading, optimisticComments, p } = this.state;
     const { comment_count } = this.props;
     const { username } = this.props.user;
     if (isLoading) {
@@ -51,6 +59,25 @@ class Comments extends Component {
             );
           })}
         </ul>
+        <section className="content__pages">
+          <h4>page {p}</h4>
+          <button
+            onClick={() => {
+              this.handleButtonClick(-1);
+            }}
+            disabled={p < 2}
+          >
+            ←
+          </button>
+          <button
+            onClick={() => {
+              this.handleButtonClick(1);
+            }}
+            disabled={comments.length === 0}
+          >
+            →
+          </button>
+        </section>
         <AddComment user={this.props.user} addNewComment={this.addNewComment} />
       </div>
     );
@@ -58,7 +85,8 @@ class Comments extends Component {
 
   fetchComments = () => {
     const { article_id } = this.props;
-    api.getArticleComments(article_id).then((comments) => {
+    const { limit, p } = this.state;
+    api.getArticleComments(article_id, limit, p).then((comments) => {
       this.setState({ comments, isLoading: false });
     });
   };
@@ -89,6 +117,11 @@ class Comments extends Component {
           optimisticComments: optimisticComments - 1,
         };
       });
+    });
+  };
+  handleButtonClick = (num) => {
+    this.setState(({ p }) => {
+      return { p: p + num };
     });
   };
 }

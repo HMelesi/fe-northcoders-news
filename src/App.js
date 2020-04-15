@@ -8,6 +8,8 @@ import LoggedIn from "./components/LoggedIn.jsx";
 import HeaderText from "./components/HeaderText";
 import TopicPage from "./components/TopicPage";
 import IndividualArticle from "./components/IndividualArticle.jsx";
+import Footer from "./components/Footer";
+import CreateArticle from "./components/CreateArticle";
 
 class App extends Component {
   state = {
@@ -34,8 +36,12 @@ class App extends Component {
             path="/articles/:article_id"
             user={this.state.user}
           />
+          <CreateArticle path="/user/createarticle" user={this.state.user} />
           {/* <Error /> */}
         </Router>
+        <footer>
+          <Footer />
+        </footer>
       </div>
     );
   }

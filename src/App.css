@@ -8,6 +8,14 @@ body {
   justify-content: space-around;
 }
 
+.App {
+  min-width: 80vw;
+  max-width: 80vw;
+  font-family: "Junge", serif;
+  display: flex;
+  flex-direction: column;
+}
+
 button {
   color: #fe5f55 !important;
   background: none;
@@ -30,14 +38,6 @@ button:disabled {
   cursor: pointer;
 }
 
-.App {
-  min-width: 80vw;
-  max-width: 80vw;
-  font-family: "Junge", serif;
-  display: flex;
-  flex-direction: column;
-}
-
 .link__black {
   text-decoration: none;
   color: #000000;
@@ -56,6 +56,22 @@ button:disabled {
 .link__white:visited {
   text-decoration: none;
   color: #ffffff;
+}
+
+.link__red {
+  text-decoration: none;
+  color: #fe5f55;
+}
+
+.link__red:visited {
+  text-decoration: none;
+  color: #fe5f55;
+}
+
+.footer {
+  background-color: white;
+  margin-top: 20px;
+  padding: 10px 20px 10px 20px;
 }
 
 .header {
@@ -211,6 +227,26 @@ button:disabled {
 }
 
 .content__comments__commentinput {
+  margin: 10px;
+  align-self: center;
+  border-bottom: #fe5f55 solid 2px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.content__createarticle__form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 15px;
+}
+
+.content__createarticle__label {
+  display: flex;
+}
+
+.content__createarticle__input {
   margin: 10px;
   align-self: center;
   border-bottom: #fe5f55 solid 2px;
