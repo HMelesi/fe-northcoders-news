@@ -3,8 +3,6 @@ import * as api from "../utils/api";
 import Loading from "../components/Loading";
 import { Link } from "@reach/router";
 import ArticleSort from "./ArticleSort";
-// import Collapsible from "react-collapsible";
-// import ArticleTitle from "./ArticleTitle";
 
 class ArticleList extends Component {
   state = {
@@ -12,24 +10,27 @@ class ArticleList extends Component {
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
+    p: 2,
+    limit: 10,
   };
 
   componentDidMount = () => {
     const { topic } = this.props;
-    const { sort_by, order } = this.state;
-    this.fetchArticles(topic, sort_by, order);
+    const { sort_by, order, limit, p } = this.state;
+    this.fetchArticles(topic, sort_by, order, limit, p);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.topic !== prevProps.topic) {
+    if (this.props.topic !== prevProps.topic || this.state.p !== prevState.p) {
+      console.log("in here");
       const { topic } = this.props;
-      const { sort_by, order } = this.state;
-      this.fetchArticles(topic, sort_by, order);
+      const { sort_by, order, limit, p } = this.state;
+      this.fetchArticles(topic, sort_by, order, limit, p);
     }
   };
 
   render() {
-    const { articles, isLoading, sort_by, order } = this.state;
+    const { articles, isLoading, sort_by, order, p } = this.state;
     if (isLoading) {
       return <Loading />;
     }
@@ -60,26 +61,50 @@ class ArticleList extends Component {
             );
           })}
         </ul>
+        <section className="content__pages">
+          <h4>page {p}</h4>
+          <button
+            onClick={() => {
+              this.handleButtonClick(-1);
+            }}
+            disabled={p < 2}
+          >
+            ←
+          </button>
+          <button
+            onClick={() => {
+              this.handleButtonClick(1);
+            }}
+          >
+            →
+          </button>
+        </section>
       </div>
     );
   }
 
-  fetchArticles = (topic, sort_by, order) => {
-    api.getArticles(topic, sort_by, order).then((articles) => {
+  fetchArticles = (topic, sort_by, order, limit, p) => {
+    api.getArticles(topic, sort_by, order, limit, p).then((articles) => {
       this.setState({ articles, isLoading: false });
     });
   };
 
   handleInputChange = (event) => {
     const { value, name } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, p: 1 });
   };
 
   handleInputSubmit = (event) => {
     event.preventDefault();
     const { topic } = this.props;
-    const { sort_by, order } = this.state;
-    this.fetchArticles(topic, sort_by, order);
+    const { sort_by, order, limit, p } = this.state;
+    this.fetchArticles(topic, sort_by, order, limit, p);
+  };
+
+  handleButtonClick = (num) => {
+    this.setState(({ p }) => {
+      return { p: p + num };
+    });
   };
 }
 

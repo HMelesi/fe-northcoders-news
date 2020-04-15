@@ -10,7 +10,6 @@ body {
 
 button {
   color: #fe5f55 !important;
-  text-decoration: none;
   background: none;
   border: none;
   font-family: "Junge", serif;
@@ -18,8 +17,17 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  color: #000000 !important;
+button:disabled {
+  color: grey !important;
+}
+
+.content__select {
+  color: #fe5f55 !important;
+  background: none;
+  border: none;
+  font-family: "Junge", serif;
+  font-size: 12pt;
+  cursor: pointer;
 }
 
 .App {
@@ -151,6 +159,21 @@ button:hover {
   }
 }
 
+.content__vote {
+  display: flex;
+  align-items: center;
+}
+
+.content__vote__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* .content__vote__text {
+
+} */
+
 .content__article__body {
   background-color: #faf1ef;
   color: black;
@@ -198,4 +221,8 @@ button:hover {
 
 .content__message__text {
   color: #fe5f55;
+}
+
+.content__pages {
+  display: flex;
 }

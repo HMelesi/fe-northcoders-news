@@ -10,24 +10,28 @@ class Vote extends Component {
     const { votes } = this.props;
     const { optimisticVotes } = this.state;
     return (
-      <div>
-        <h4>&#123; votes: {votes + optimisticVotes} &#125;</h4>
-        <button
-          onClick={() => {
-            this.handleClick(1);
-          }}
-          disabled={optimisticVotes > 0}
-        >
-          votes + +
-        </button>
-        <button
-          onClick={() => {
-            this.handleClick(-1);
-          }}
-          disabled={optimisticVotes < 0}
-        >
-          votes - -
-        </button>
+      <div className="content__vote">
+        <div className="content__vote__buttons">
+          <button
+            onClick={() => {
+              this.handleClick(1);
+            }}
+            disabled={optimisticVotes > 0}
+          >
+            ↑ votes + +
+          </button>
+          <button
+            onClick={() => {
+              this.handleClick(-1);
+            }}
+            disabled={optimisticVotes < 0}
+          >
+            ↓ votes - -
+          </button>
+        </div>
+        <h4 className="content__vote__text">
+          &#123; votes: {votes + optimisticVotes} &#125;
+        </h4>
       </div>
     );
   }
