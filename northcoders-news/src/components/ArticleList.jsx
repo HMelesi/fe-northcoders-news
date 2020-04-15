@@ -51,8 +51,8 @@ class ArticleList extends Component {
                 className="link__white"
               >
                 <li className="content__article__title">
-                  <h3>{title}</h3>
-                  <p>
+                  <h3 className="content__article__title__name">{title}</h3>
+                  <p className="content__article__title__stats">
                     &#123; votes: {votes}, comments: {comment_count} &#125;
                   </p>
                 </li>

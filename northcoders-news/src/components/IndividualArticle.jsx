@@ -3,6 +3,7 @@ import Comments from "./Comments";
 import * as api from "../utils/api";
 import Loading from "./Loading";
 import { Link } from "@reach/router";
+import { convertDate } from "../utils/utils";
 
 class IndividualArticle extends Component {
   state = {
@@ -25,6 +26,7 @@ class IndividualArticle extends Component {
       votes,
       comment_count,
       article_id,
+      created_at,
     } = article;
     if (isLoading) {
       return <Loading />;
@@ -36,6 +38,7 @@ class IndividualArticle extends Component {
         </Link>
         <h2 className="content__title">&lt; {title} /&gt;</h2>
         <h3 className="content__title">&lt; {author} /&gt;</h3>
+        <h4>{convertDate(created_at)}</h4>
         <h4>
           &#123; votes: {votes}, comments: {comment_count} &#125;
         </h4>

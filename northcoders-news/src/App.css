@@ -120,13 +120,35 @@ button:hover {
 .content__article__title {
   background-color: #fe5f55;
   color: white;
-  margin: 5px;
+  margin: 5px 0px 5px 0px;
   padding: 0px 10px 0px 10px;
   display: flex;
-
   flex-wrap: wrap;
   justify-content: space-between;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .content__article__title__name {
+    font-size: 12pt;
+  }
+
+  .content__article__title__stats {
+    font-size: 10pt;
+  }
+}
+
+@media (min-width: 600px) {
+  .content__article__title__name {
+    max-width: 75%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .content__article__title__stats {
+    max-width: 25%;
+  }
 }
 
 .content__article__body {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loading from "./Loading";
 import AddComment from "./AddComment";
+import { convertDate } from "../utils/utils";
 
 class Comments extends Component {
   state = {
@@ -31,7 +32,7 @@ class Comments extends Component {
             return (
               <li className="content__comments__list__comment" key={comment_id}>
                 <h3>&lt; {author} /&gt;</h3>
-                <h4>{created_at}</h4>
+                <h4>{convertDate(created_at)}</h4>
                 <h4>&#123; votes: {votes} &#125;</h4>
                 {username === author ? (
                   <>
