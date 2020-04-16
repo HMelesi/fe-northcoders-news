@@ -49,7 +49,7 @@ class ArticleList extends Component {
         />
         <ul className="content__articlelist">
           {articles.map((article) => {
-            const { title, votes, comment_count, article_id } = article;
+            const { title, votes, comment_count, article_id, topic } = article;
             return (
               <Link
                 to={`/articles/${article_id}`}
@@ -57,7 +57,8 @@ class ArticleList extends Component {
                 className="link__white"
               >
                 <li className="content__article__title">
-                  <h3 className="content__article__title__name">{title}</h3>
+                  <h4 className="content__article__title__name">{title}</h4>
+
                   <p className="content__article__title__stats">
                     &#123; votes: {votes}, comments: {comment_count} &#125;
                   </p>

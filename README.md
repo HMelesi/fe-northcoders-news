@@ -1,68 +1,58 @@
+### Northcoders News
+
+Northcoders News is a social news aggregation, web content rating, and discussion website.<br/>
+Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and articles, and remove any comments or articles which they have added.
+
+### Links
+
+Northcoders News is hosted here:
+
+The GitHub repository for Northcoders News back end can be found here: https://github.com/HMelesi/be-nc-news
+The hosted version of Northcoders News back end can be found here: https://hm-nc-news-app.herokuapp.com/api/
+
+### User Stories
+
+As a user of the site, you can:
+
+- view a list of all articles
+- view a page for each topic with a list of related articles.
+- view an individual article.
+- view an individual article's comments.
+- sort articles by:
+  - date created
+  - comment_count
+  - votes
+- post a new comment to an existing article.
+- delete your own comments.
+- vote on an articles written by other users and immediately see the change.
+- vote on a comment written by other users and immediately see the change.
+- navigate over pages of articles using pagination.
+- navigate over pages of comments using pagination.
+- post a new article to an existing topic.
+- delete your own articles.
+- see an error message when on a non-existent or invalid path.
+
+### Getting Started
+
+To create your own copy of the project, please fork this repository and using your terminal, clone using the command:
+
+```
+git clone your-forked-repo-link-here
+```
+
+Once open, install dependencies run the following command in your terminal:
+
+```
+npm install
+```
+
+to run the project locally, in your terminal use:
+
+```
+`npm start`
+```
+
+Runs the app in the development mode.
+The page will reload if you make edits to the code.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
