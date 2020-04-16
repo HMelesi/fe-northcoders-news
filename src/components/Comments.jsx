@@ -4,6 +4,7 @@ import Loading from "./Loading";
 import AddComment from "./AddComment";
 import { convertDate } from "../utils/utils";
 import Vote from "./Vote";
+import Error from "../components/Error";
 
 class Comments extends Component {
   state = {
@@ -12,6 +13,7 @@ class Comments extends Component {
     optimisticComments: 0,
     limit: 10,
     p: 1,
+    error: null,
   };
 
   componentDidMount = () => {
@@ -25,11 +27,15 @@ class Comments extends Component {
   };
 
   render() {
-    const { comments, isLoading, optimisticComments, p } = this.state;
+    const { comments, isLoading, optimisticComments, p, error } = this.state;
     const { comment_count } = this.props;
     const { username } = this.props.user;
     if (isLoading) {
       return <Loading />;
+    }
+    if (error) {
+      const { status, msg } = this.state.error;
+      return <Error status={status} msg={msg} />;
     }
     return (
       <div className="content__comments">
@@ -86,9 +92,18 @@ class Comments extends Component {
   fetchComments = () => {
     const { article_id } = this.props;
     const { limit, p } = this.state;
-    api.getArticleComments(article_id, limit, p).then((comments) => {
-      this.setState({ comments, isLoading: false });
-    });
+    api
+      .getArticleComments(article_id, limit, p)
+      .then((comments) => {
+        this.setState({ comments, isLoading: false });
+      })
+      .catch(({ response }) => {
+        const { status, data } = response;
+        this.setState({
+          error: { status: status, msg: data.message },
+          isLoading: false,
+        });
+      });
   };
 
   addNewComment = (comment) => {

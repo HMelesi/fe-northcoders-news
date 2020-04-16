@@ -5,11 +5,15 @@ import Loading from "./Loading";
 import { Link } from "@reach/router";
 import { convertDate } from "../utils/utils";
 import Vote from "./Vote";
+import DeletedArticle from "../components/Deleted";
+import Error from "../components/Error";
 
 class IndividualArticle extends Component {
   state = {
     article: {},
     isLoading: true,
+    deleted: false,
+    error: null,
   };
 
   componentDidMount = () => {
@@ -18,7 +22,8 @@ class IndividualArticle extends Component {
   };
 
   render() {
-    const { article, isLoading } = this.state;
+    const { username } = this.props.user;
+    const { article, isLoading, deleted, error } = this.state;
     const {
       title,
       body,
@@ -29,6 +34,13 @@ class IndividualArticle extends Component {
       article_id,
       created_at,
     } = article;
+    if (deleted) {
+      return <DeletedArticle title={title} topic={topic} />;
+    }
+    if (error) {
+      const { status, msg } = this.state.error;
+      return <Error status={status} msg={msg} />;
+    }
     if (isLoading) {
       return <Loading />;
     }
@@ -40,8 +52,16 @@ class IndividualArticle extends Component {
         <h2 className="content__title">&lt; {title} /&gt;</h2>
         <h3 className="content__title">&lt; {author} /&gt;</h3>
         <h4>{convertDate(created_at)}</h4>
+        {username === author ? (
+          <>
+            <button onClick={this.handleDeleteClick} value={article_id}>
+              delete article
+            </button>
+          </>
+        ) : (
+          <Vote votes={votes} id={article_id} />
+        )}
 
-        <Vote votes={votes} id={article_id} />
         <p className="content__article__body">{body}</p>
         <Comments
           article_id={article_id}
@@ -53,9 +73,25 @@ class IndividualArticle extends Component {
   }
 
   fetchArticle = (article_id) => {
-    api.getArticle(article_id).then((article) => {
-      this.setState({ article, isLoading: false });
-    });
+    api
+      .getArticle(article_id)
+      .then((article) => {
+        this.setState({ article, isLoading: false });
+      })
+      .catch(({ response }) => {
+        const { status, data } = response;
+        this.setState({
+          error: { status: status, msg: data.message },
+          isLoading: false,
+        });
+      });
+  };
+
+  handleDeleteClick = (event) => {
+    event.preventDefault();
+    const { value } = event.target;
+    api.deleteArticle(value);
+    this.setState({ deleted: true });
   };
 }
 

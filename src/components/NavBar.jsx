@@ -18,7 +18,7 @@ class NavBar extends Component {
       <div className="navbar">
         <nav>
           <div className="navbar__container">
-            <Collapsible trigger="< menu />" className="navbar__title">
+            <Collapsible trigger="< topics />" className="navbar__title">
               <ul className="navbar__list">
                 {topics.map((topic) => {
                   return (

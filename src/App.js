@@ -1,7 +1,7 @@
 import "./App.css";
 import { Router } from "@reach/router";
 import React, { Component } from "react";
-// import Error from "./components/Error.jsx";
+import Error from "./components/Error.jsx";
 import NavBar from "./components/NavBar.jsx";
 import Homepage from "./components/Homepage";
 import LoggedIn from "./components/LoggedIn.jsx";
@@ -37,7 +37,11 @@ class App extends Component {
             user={this.state.user}
           />
           <CreateArticle path="/user/createarticle" user={this.state.user} />
-          {/* <Error /> */}
+          <Error
+            default
+            status={404}
+            msg={"the page you are looking for does not seem to exist"}
+          />
         </Router>
         <footer>
           <Footer />
