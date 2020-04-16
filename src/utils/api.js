@@ -59,3 +59,15 @@ export const deleteComment = (comment_id) => {
 export const deleteArticle = (article_id) => {
   return request.delete(`/articles/${article_id}`);
 };
+
+export const getUsers = () => {
+  return request.get("/users").then(({ data }) => {
+    return data.users;
+  });
+};
+
+export const getUser = (username) => {
+  return request.get(`/users/${username}`).then(({ data }) => {
+    return data.user;
+  });
+};

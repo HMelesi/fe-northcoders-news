@@ -10,6 +10,7 @@ import TopicPage from "./components/TopicPage";
 import IndividualArticle from "./components/IndividualArticle.jsx";
 import Footer from "./components/Footer";
 import CreateArticle from "./components/CreateArticle";
+import * as api from "./utils/api";
 
 class App extends Component {
   state = {
@@ -26,7 +27,11 @@ class App extends Component {
       <div className="App">
         <header className="header">
           <HeaderText />
-          <LoggedIn user={this.state.user} />
+          <LoggedIn
+            user={this.state.user}
+            handleUserChange={this.handleUserChange}
+            handleUserSubmit={this.handleUserSubmit}
+          />
         </header>
         <NavBar />
         <Router className="content">
@@ -49,6 +54,14 @@ class App extends Component {
       </div>
     );
   }
+
+  handleUserChange = (event) => {
+    const { value } = event.target;
+
+    api.getUser(value).then((user) => {
+      this.setState({ user });
+    });
+  };
 }
 
 export default App;
