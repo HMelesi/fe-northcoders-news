@@ -56,9 +56,13 @@ class Comments extends Component {
                       delete comment
                     </button>
                   </>
-                ) : (
-                  <Vote votes={votes} id={comment_id} />
-                )}
+                ) : null}
+                <Vote
+                  votes={votes}
+                  id={comment_id}
+                  username={username}
+                  author={author}
+                />
 
                 <p>{body}</p>
               </li>

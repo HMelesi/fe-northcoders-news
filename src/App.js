@@ -20,6 +20,11 @@ class App extends Component {
         "https://s-media-cache-ak0.pinimg.com/564x/39/62/ec/3962eca164e60cf46f979c1f57d4078b.jpg",
       name: "Jess Jelly",
     },
+    topics: [],
+  };
+
+  componentDidMount = () => {
+    this.fetchTopics();
   };
 
   render() {
@@ -33,7 +38,7 @@ class App extends Component {
             handleUserSubmit={this.handleUserSubmit}
           />
         </header>
-        <NavBar />
+        <NavBar topics={this.state.topics} />
         <Router className="content">
           <Homepage path="/" user={this.state.user} />
           <TopicPage path="/topics/:topic" />
@@ -41,7 +46,11 @@ class App extends Component {
             path="/articles/:article_id"
             user={this.state.user}
           />
-          <CreateArticle path="/user/createarticle" user={this.state.user} />
+          <CreateArticle
+            path="/user/createarticle"
+            user={this.state.user}
+            topics={this.state.topics}
+          />
           <Error
             default
             status={404}
@@ -57,9 +66,14 @@ class App extends Component {
 
   handleUserChange = (event) => {
     const { value } = event.target;
-
     api.getUser(value).then((user) => {
       this.setState({ user });
+    });
+  };
+
+  fetchTopics = () => {
+    api.getTopics().then((topics) => {
+      this.setState({ topics });
     });
   };
 }

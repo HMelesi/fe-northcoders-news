@@ -58,10 +58,14 @@ class IndividualArticle extends Component {
               delete article
             </button>
           </>
-        ) : (
-          <Vote votes={votes} id={article_id} />
-        )}
+        ) : null}
 
+        <Vote
+          votes={votes}
+          id={article_id}
+          username={username}
+          author={author}
+        />
         <p className="content__article__body">{body}</p>
         <Comments
           article_id={article_id}

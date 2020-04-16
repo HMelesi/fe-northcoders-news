@@ -7,7 +7,7 @@ class Vote extends Component {
   };
 
   render() {
-    const { votes } = this.props;
+    const { votes, username, author } = this.props;
     const { optimisticVotes } = this.state;
     return (
       <div className="content__vote">
@@ -16,17 +16,17 @@ class Vote extends Component {
             onClick={() => {
               this.handleClick(1);
             }}
-            disabled={optimisticVotes > 0}
+            disabled={optimisticVotes > 0 || username === author}
           >
-            ↑ votes + +
+            ↑
           </button>
           <button
             onClick={() => {
               this.handleClick(-1);
             }}
-            disabled={optimisticVotes < 0}
+            disabled={optimisticVotes < 0 || username === author}
           >
-            ↓ votes - -
+            ↓
           </button>
         </div>
         <h4 className="content__vote__text">

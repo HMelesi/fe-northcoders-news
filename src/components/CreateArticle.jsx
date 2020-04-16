@@ -21,7 +21,8 @@ class CreateArticle extends Component {
   };
 
   render() {
-    const { author, title, body, topic } = this.state.article;
+    const { author, title, body } = this.state.article;
+    const { topics } = this.props;
     return (
       <div className="content__container">
         <h3>&lt; submit an article /&gt;</h3>
@@ -41,16 +42,29 @@ class CreateArticle extends Component {
               className="content__createarticle__input"
               name="title"
               value={title}
+              required
             />
           </label>
           <label className="content__createarticle__label">
             <p>topic = </p>
-            <input
-              onChange={this.handleInputChange}
-              className="content__createarticle__input"
+            <select
+              className="content__select"
               name="topic"
-              value={topic}
-            />
+              onChange={this.handleInputChange}
+              required
+              defaultValue=""
+            >
+              <option value="" disabled>
+                choose a topic
+              </option>
+              {topics.map((topic) => {
+                return (
+                  <option value={topic.slug} key={topic.slug}>
+                    {topic.slug}
+                  </option>
+                );
+              })}
+            </select>
           </label>
           <label className="ccontent__createarticle__label">
             <p>content = </p>
@@ -59,6 +73,7 @@ class CreateArticle extends Component {
               className="content__createarticle__input"
               name="body"
               value={body}
+              required
             />
           </label>
 
