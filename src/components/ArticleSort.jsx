@@ -22,8 +22,8 @@ const ArticleSort = (props) => {
           name="order"
           onChange={handleInputChange}
         >
-          <option value="asc">ascending</option>
           <option value="desc">descending</option>
+          <option value="asc">ascending</option>
         </select>
         <button> => click to display articles</button>
       </form>

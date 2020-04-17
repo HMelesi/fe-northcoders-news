@@ -14,7 +14,7 @@ export const getArticles = (topic, sort_by, order, limit, p) => {
   return request
     .get("/articles", { params: { topic, sort_by, order, limit, p } })
     .then(({ data }) => {
-      return data.articles;
+      return { articles: data.articles, total_count: data.total_count };
     });
 };
 

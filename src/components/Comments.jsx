@@ -27,7 +27,14 @@ class Comments extends Component {
   };
 
   render() {
-    const { comments, isLoading, optimisticComments, p, error } = this.state;
+    const {
+      comments,
+      isLoading,
+      optimisticComments,
+      p,
+      error,
+      limit,
+    } = this.state;
     const { comment_count } = this.props;
     const { username } = this.props.user;
     if (isLoading) {
@@ -83,7 +90,7 @@ class Comments extends Component {
             onClick={() => {
               this.handleButtonClick(1);
             }}
-            disabled={comments.length === 0}
+            disabled={p * limit > comment_count}
           >
             →
           </button>

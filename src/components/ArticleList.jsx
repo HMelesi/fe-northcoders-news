@@ -8,6 +8,7 @@ import Error from "../components/Error";
 class ArticleList extends Component {
   state = {
     articles: [],
+    totalArticles: 0,
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
@@ -31,7 +32,16 @@ class ArticleList extends Component {
   };
 
   render() {
-    const { articles, isLoading, sort_by, order, p, error } = this.state;
+    const {
+      articles,
+      total_count,
+      isLoading,
+      sort_by,
+      order,
+      limit,
+      p,
+      error,
+    } = this.state;
     if (isLoading) {
       return <Loading />;
     }
@@ -49,7 +59,7 @@ class ArticleList extends Component {
         />
         <ul className="content__articlelist">
           {articles.map((article) => {
-            const { title, votes, comment_count, article_id, topic } = article;
+            const { title, votes, comment_count, article_id } = article;
             return (
               <Link
                 to={`/articles/${article_id}`}
@@ -81,7 +91,7 @@ class ArticleList extends Component {
             onClick={() => {
               this.handleButtonClick(1);
             }}
-            disabled={articles.length === 0}
+            disabled={p * limit > total_count}
           >
             →
           </button>
@@ -93,8 +103,8 @@ class ArticleList extends Component {
   fetchArticles = (topic, sort_by, order, limit, p) => {
     api
       .getArticles(topic, sort_by, order, limit, p)
-      .then((articles) => {
-        this.setState({ articles, isLoading: false });
+      .then(({ articles, total_count }) => {
+        this.setState({ articles, isLoading: false, total_count });
       })
       .catch(({ response }) => {
         const { status, data } = response;

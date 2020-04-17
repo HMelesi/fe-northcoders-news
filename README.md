@@ -1,6 +1,7 @@
 ### Northcoders News
 
-Northcoders News is a social news aggregation, web content rating, and discussion website.<br/>
+Northcoders News is a social news aggregation, web content rating, and discussion website.
+
 Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and articles, and remove any comments or articles which they have added.
 
 ### Links
@@ -8,6 +9,7 @@ Northcoders News has articles which are divided into topics. Each article has us
 Northcoders News is hosted here:
 
 The GitHub repository for Northcoders News back end can be found here: https://github.com/HMelesi/be-nc-news
+
 The hosted version of Northcoders News back end can be found here: https://hm-nc-news-app.herokuapp.com/api/
 
 ### User Stories
