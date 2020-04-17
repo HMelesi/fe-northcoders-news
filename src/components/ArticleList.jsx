@@ -24,10 +24,15 @@ class ArticleList extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.topic !== prevProps.topic || this.state.p !== prevState.p) {
-      const { topic } = this.props;
+    if (this.props.topic !== prevProps.topic) {
+      const { topic, author } = this.props;
+      const { sort_by, order, limit } = this.state;
+      this.setState({ p: 1 });
+      this.fetchArticles(topic, author, sort_by, order, limit, 1);
+    } else if (this.state.p !== prevState.p) {
+      const { topic, author } = this.props;
       const { sort_by, order, limit, p } = this.state;
-      this.fetchArticles(topic, sort_by, order, limit, p);
+      this.fetchArticles(topic, author, sort_by, order, limit, p);
     }
   };
 
@@ -51,12 +56,14 @@ class ArticleList extends Component {
     }
     return (
       <div className="content__container">
-        <ArticleSort
-          sort_by={sort_by}
-          order={order}
-          handleInputChange={this.handleInputChange}
-          handleInputSubmit={this.handleInputSubmit}
-        />
+        <section className="content__title__section">
+          <ArticleSort
+            sort_by={sort_by}
+            order={order}
+            handleInputChange={this.handleInputChange}
+            handleInputSubmit={this.handleInputSubmit}
+          />
+        </section>
         <ul className="content__articlelist">
           {articles.map((article) => {
             const { title, votes, comment_count, article_id } = article;

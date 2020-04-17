@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
+import { Link } from "@reach/router";
 
 class LoggedIn extends Component {
   state = {
@@ -36,6 +37,9 @@ class LoggedIn extends Component {
             }
           })}
         </select>
+        <Link to="/user/createarticle">
+          <button className="button__link__red">write an article</button>
+        </Link>
       </div>
     );
   }

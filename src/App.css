@@ -17,7 +17,7 @@ body {
 }
 
 button {
-  color: #fe5f55 !important;
+  color: #fe5f55;
   background: none;
   border: none;
   font-family: "Junge", serif;
@@ -36,6 +36,14 @@ button:disabled {
   font-family: "Junge", serif;
   font-size: 12pt;
   cursor: pointer;
+}
+
+select {
+  text-align-last: right;
+}
+
+option {
+  direction: rtl;
 }
 
 .link__black {
@@ -68,6 +76,25 @@ button:disabled {
   color: #fe5f55;
 }
 
+.button__link__red {
+  text-decoration: none;
+  color: #ffffff;
+  border: #ffffff;
+  border-width: 1px;
+  border-radius: 3px;
+  background-color: #ffa8a3;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.button__link__red:hover {
+  background-color: grey;
+}
+
+.button__link__red:active {
+  color: #fe5f55;
+}
+
 .footer {
   background-color: white;
   margin-top: 20px;
@@ -90,6 +117,9 @@ button:disabled {
   background-color: white;
   padding: 0px 20px 0px 0px;
   align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .navbar {
@@ -104,6 +134,8 @@ button:disabled {
 
 .navbar__title {
   cursor: pointer;
+  font-size: 14pt;
+  padding-bottom: 20px;
 }
 
 .navbar__list {
@@ -111,7 +143,9 @@ button:disabled {
   flex-direction: row;
   flex-wrap: wrap;
   list-style-type: none;
-  padding: 0px;
+  padding-left: 0px;
+  padding-bottom: 20px;
+  font-size: 14pt;
 }
 
 .navbar__topic {
@@ -125,6 +159,13 @@ button:disabled {
 
 .content__container {
   padding: 10px 20px 10px 20px;
+}
+
+.content__title__section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0px 0px 0px;
 }
 
 .content__articlelist {
@@ -264,7 +305,7 @@ button:disabled {
   padding: 20px;
 }
 
-/* spinner animation below */
+/* loading animation below */
 
 .lds-ellipsis {
   display: inline-block;

@@ -26,10 +26,20 @@ class AddComment extends Component {
               onChange={this.handleInputChange}
               className="content__comments__commentinput"
               value={body}
+              required
             />
           </label>
           <h4>&#125;</h4>
-          <button>submit comment</button>
+          <button type="submit" className="button__link__red">
+            submit comment
+          </button>
+          <button
+            onClick={this.resetForm}
+            type="reset"
+            className="button__link__red"
+          >
+            clear fields
+          </button>
         </form>
       </div>
     );
@@ -47,6 +57,14 @@ class AddComment extends Component {
     const { username } = this.props.user;
     const { value } = event.target;
     this.setState({ comment: { username, body: value } });
+  };
+
+  resetForm = () => {
+    this.setState((currentState) => {
+      return {
+        comment: { ...currentState.comment, body: "" },
+      };
+    });
   };
 }
 

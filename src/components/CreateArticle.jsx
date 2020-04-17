@@ -77,7 +77,16 @@ class CreateArticle extends Component {
             />
           </label>
 
-          <button>post article =></button>
+          <button type="submit" className="button__link__red">
+            post article
+          </button>
+          <button
+            onClick={this.resetForm}
+            type="reset"
+            className="button__link__red"
+          >
+            clear fields
+          </button>
         </form>
         {this.state.postedArticle.article_id ? (
           <Link
@@ -108,6 +117,14 @@ class CreateArticle extends Component {
           article: { ...currentState.article, title: "", body: "", topic: "" },
         };
       });
+    });
+  };
+
+  resetForm = () => {
+    this.setState((currentState) => {
+      return {
+        article: { ...currentState.article, title: "", body: "", topic: "" },
+      };
     });
   };
 }
