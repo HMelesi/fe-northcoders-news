@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loading from "../components/Loading";
-import { Link } from "@reach/router";
 import ArticleSort from "./ArticleSort";
 import Error from "../components/Error";
+import ArticleTitleLink from "./ArticleTitleLink";
 
 class ArticleList extends Component {
   state = {
@@ -68,19 +68,13 @@ class ArticleList extends Component {
           {articles.map((article) => {
             const { title, votes, comment_count, article_id } = article;
             return (
-              <Link
-                to={`/articles/${article_id}`}
+              <ArticleTitleLink
+                article_id={article_id}
+                comment_count={comment_count}
+                title={title}
+                votes={votes}
                 key={article_id}
-                className="link__white"
-              >
-                <li className="content__article__title">
-                  <h4 className="content__article__title__name">{title}</h4>
-
-                  <p className="content__article__title__stats">
-                    &#123; votes: {votes}, comments: {comment_count} &#125;
-                  </p>
-                </li>
-              </Link>
+              />
             );
           })}
         </ul>

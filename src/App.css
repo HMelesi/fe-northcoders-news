@@ -23,6 +23,7 @@ button {
   font-family: "Junge", serif;
   font-size: 12pt;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 button:disabled {
@@ -36,10 +37,6 @@ button:disabled {
   font-family: "Junge", serif;
   font-size: 12pt;
   cursor: pointer;
-}
-
-select {
-  text-align-last: right;
 }
 
 option {
@@ -113,13 +110,26 @@ option {
   max-width: 210px;
 }
 
-.loggedin {
-  background-color: white;
-  padding: 0px 20px 0px 0px;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+@media (max-width: 600px) {
+  .loggedin {
+    background-color: white;
+    padding: 0px 20px 0px 0px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 600px) {
+  .loggedin {
+    background-color: white;
+    padding: 0px 20px 0px 0px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 }
 
 .navbar {
@@ -258,38 +268,50 @@ option {
   margin: 10px 0px 10px 0px;
 }
 
-.content__comments__commentlabel {
-  display: flex;
-  margin-left: 30px;
+@media (max-width: 600px) {
+  .content__form {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+    width: 100%;
+  }
 }
 
-.content__comments__commentinput {
-  margin: 10px;
-  align-self: center;
-  border-bottom: #fe5f55 solid 2px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+@media (min-width: 600px) {
+  .content__form {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 15px;
+    width: 100%;
+  }
 }
 
-.content__createarticle__form {
+#article_form {
+  width: 100%;
+}
+
+#comment_form {
+  width: 100%;
+}
+
+.content__form__label {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 15px;
 }
 
-.content__createarticle__label {
+.content__form__input {
+  margin: 10px;
+  color: grey;
+  border: #ffa8a3 solid 2px;
+  padding: 5px;
+}
+
+.form__buttons {
   display: flex;
 }
 
-.content__createarticle__input {
-  margin: 10px;
-  align-self: center;
-  border-bottom: #fe5f55 solid 2px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+.content__createarticle__form__large {
+  width: 100%;
 }
 
 .content__message__text {

@@ -1,6 +1,5 @@
 import React from "react";
 import ArticleList from "./ArticleList";
-import { Link } from "@reach/router";
 
 const TopicPage = ({ topic }) => {
   return (

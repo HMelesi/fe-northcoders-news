@@ -26,6 +26,9 @@ class App extends Component {
 
   componentDidMount = () => {
     this.fetchTopics();
+    if (localStorage.user !== undefined) {
+      this.setState({ user: JSON.parse(localStorage.user) });
+    }
   };
 
   render() {
@@ -41,7 +44,7 @@ class App extends Component {
         </header>
         <NavBar topics={this.state.topics} />
         <Router className="content">
-          <Homepage path="/" user={this.state.user} />
+          <Homepage path="/" />
           <TopicPage path="/topics/:topic" />
           <UserPage path="/users/:author" />
           <IndividualArticle
@@ -70,6 +73,7 @@ class App extends Component {
     const { value } = event.target;
     api.getUser(value).then((user) => {
       this.setState({ user });
+      window.localStorage.setItem("user", JSON.stringify(user));
     });
   };
 

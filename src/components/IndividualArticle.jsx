@@ -67,6 +67,7 @@ class IndividualArticle extends Component {
           id={article_id}
           username={username}
           author={author}
+          type="article"
         />
         <p className="content__article__body">{body}</p>
         <Comments

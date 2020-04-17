@@ -12,35 +12,41 @@ class AddComment extends Component {
     const { username } = this.props.user;
     const { body } = this.state.comment;
     return (
-      <div>
+      <div className="content__container">
         <h3>&lt; add a comment /&gt;</h3>
-        <h4>comment = &#123;</h4>
-        <form onSubmit={this.handleSubmit}>
-          <label className="content__comments__commentlabel">
-            <p>username: </p>
-            <p className="content__comments__commentinput">{username}</p>
-          </label>
-          <label className="content__comments__commentlabel">
-            <p>comment: </p>
-            <input
-              onChange={this.handleInputChange}
-              className="content__comments__commentinput"
-              value={body}
-              required
-            />
-          </label>
-          <h4>&#125;</h4>
-          <button type="submit" className="button__link__red">
-            submit comment
-          </button>
-          <button
-            onClick={this.resetForm}
-            type="reset"
-            className="button__link__red"
-          >
-            clear fields
-          </button>
-        </form>
+        <div className="content__form">
+          <form onSubmit={this.handleSubmit} id="comment_form">
+            <label className="content__form__label">
+              <p>username: </p>
+              <p className="content__form__input">{username}</p>
+            </label>
+            <label className="content__form__label">
+              <p>comment: </p>
+              <textarea
+                name="body"
+                form="comment_form"
+                onChange={this.handleInputChange}
+                value={body}
+                required
+                className="content__form__input"
+                rows="15"
+              ></textarea>
+            </label>
+
+            <div className="form__buttons">
+              <button type="submit" className="button__link__red">
+                submit comment
+              </button>
+              <button
+                onClick={this.resetForm}
+                type="reset"
+                className="button__link__red"
+              >
+                clear fields
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

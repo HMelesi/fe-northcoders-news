@@ -49,6 +49,10 @@ class Comments extends Component {
         <p className="content__comments__title">
           &#123; comments: {+comment_count + optimisticComments} &#125;
         </p>
+        <a href="#addcomment">
+          <button className="button__link__red">add comment</button>
+        </a>
+
         <ul className="content__comments__list">
           {comments.map((comment) => {
             const { author, votes, created_at, body, comment_id } = comment;
@@ -69,6 +73,7 @@ class Comments extends Component {
                   id={comment_id}
                   username={username}
                   author={author}
+                  type="comment"
                 />
 
                 <p>{body}</p>
@@ -95,7 +100,12 @@ class Comments extends Component {
             →
           </button>
         </section>
-        <AddComment user={this.props.user} addNewComment={this.addNewComment} />
+        <section id="addcomment">
+          <AddComment
+            user={this.props.user}
+            addNewComment={this.addNewComment}
+          />
+        </section>
       </div>
     );
   }

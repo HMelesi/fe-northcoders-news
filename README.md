@@ -6,7 +6,7 @@ Northcoders News has articles which are divided into topics. Each article has us
 
 ### Links
 
-Northcoders News is hosted here:
+Northcoders News is hosted here: https://northcoders-news-melesi.netlify.app/
 
 The GitHub repository for Northcoders News back end can be found here: https://github.com/HMelesi/be-nc-news
 
@@ -37,6 +37,8 @@ As a user of the site, you can:
 
 ### Getting Started
 
+To run this project you will need Node installe, minimum version 13.8.0.
+
 To create your own copy of the project, please fork this repository and using your terminal, clone using the command:
 
 ```
@@ -52,7 +54,7 @@ npm install
 to run the project locally, in your terminal use:
 
 ```
-`npm start`
+npm start
 ```
 
 Runs the app in the development mode.
