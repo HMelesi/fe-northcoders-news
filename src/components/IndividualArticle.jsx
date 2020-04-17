@@ -50,7 +50,9 @@ class IndividualArticle extends Component {
           <h3>&lt; {topic} /&gt;</h3>
         </Link>
         <h2 className="content__title">&lt; {title} /&gt;</h2>
-        <h3 className="content__title">&lt; {author} /&gt;</h3>
+        <Link to={`/users/${author}`} className="link__red">
+          <h3>&lt; {author} /&gt;</h3>
+        </Link>
         <h4>{convertDate(created_at)}</h4>
         {username === author ? (
           <>

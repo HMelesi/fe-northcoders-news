@@ -18,6 +18,7 @@ As a user of the site, you can:
 
 - view a list of all articles
 - view a page for each topic with a list of related articles.
+- view a page for each author with a list of their articles.
 - view an individual article.
 - view an individual article's comments.
 - sort articles by:

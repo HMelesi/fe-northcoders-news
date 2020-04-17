@@ -10,9 +10,9 @@ export const getTopics = () => {
   });
 };
 
-export const getArticles = (topic, sort_by, order, limit, p) => {
+export const getArticles = (topic, author, sort_by, order, limit, p) => {
   return request
-    .get("/articles", { params: { topic, sort_by, order, limit, p } })
+    .get("/articles", { params: { topic, author, sort_by, order, limit, p } })
     .then(({ data }) => {
       return { articles: data.articles, total_count: data.total_count };
     });

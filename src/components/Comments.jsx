@@ -90,7 +90,7 @@ class Comments extends Component {
             onClick={() => {
               this.handleButtonClick(1);
             }}
-            disabled={p * limit > comment_count}
+            disabled={p * limit >= comment_count}
           >
             →
           </button>

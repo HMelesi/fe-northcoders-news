@@ -1,31 +1,20 @@
 import React from "react";
 
 const ArticleSort = (props) => {
-  const { handleInputChange, handleInputSubmit } = props;
+  const { handleInputChange } = props;
 
   return (
     <div>
-      <form onSubmit={handleInputSubmit}>
+      <form>
         <label>sort by: </label>
-        <select
-          className="content__select"
-          name="sort_by"
-          onChange={handleInputChange}
-        >
-          <option value="created_at">date posted</option>
-          <option value="comment_count">article comments</option>
-          <option value="votes">article votes</option>
+        <select className="content__select" onChange={handleInputChange}>
+          <option value="newest first">newest first</option>
+          <option value="oldest first">oldest first</option>
+          <option value="most comments">most comments</option>
+          <option value="least comments">least comments</option>
+          <option value="most votes">most votes</option>
+          <option value="least votes">least votes</option>
         </select>
-        <label> order: </label>
-        <select
-          className="content__select"
-          name="order"
-          onChange={handleInputChange}
-        >
-          <option value="desc">descending</option>
-          <option value="asc">ascending</option>
-        </select>
-        <button> => click to display articles</button>
       </form>
     </div>
   );

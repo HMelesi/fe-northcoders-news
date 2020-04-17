@@ -10,6 +10,7 @@ import TopicPage from "./components/TopicPage";
 import IndividualArticle from "./components/IndividualArticle.jsx";
 import Footer from "./components/Footer";
 import CreateArticle from "./components/CreateArticle";
+import UserPage from "./components/UserPage";
 import * as api from "./utils/api";
 
 class App extends Component {
@@ -42,6 +43,7 @@ class App extends Component {
         <Router className="content">
           <Homepage path="/" user={this.state.user} />
           <TopicPage path="/topics/:topic" />
+          <UserPage path="/users/:author" />
           <IndividualArticle
             path="/articles/:article_id"
             user={this.state.user}

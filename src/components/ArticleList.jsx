@@ -18,9 +18,9 @@ class ArticleList extends Component {
   };
 
   componentDidMount = () => {
-    const { topic } = this.props;
+    const { topic, author } = this.props;
     const { sort_by, order, limit, p } = this.state;
-    this.fetchArticles(topic, sort_by, order, limit, p);
+    this.fetchArticles(topic, author, sort_by, order, limit, p);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -91,7 +91,7 @@ class ArticleList extends Component {
             onClick={() => {
               this.handleButtonClick(1);
             }}
-            disabled={p * limit > total_count}
+            disabled={p * limit >= total_count}
           >
             →
           </button>
@@ -100,9 +100,9 @@ class ArticleList extends Component {
     );
   }
 
-  fetchArticles = (topic, sort_by, order, limit, p) => {
+  fetchArticles = (topic, author, sort_by, order, limit, p) => {
     api
-      .getArticles(topic, sort_by, order, limit, p)
+      .getArticles(topic, author, sort_by, order, limit, p)
       .then(({ articles, total_count }) => {
         this.setState({ articles, isLoading: false, total_count });
       })
@@ -116,15 +116,21 @@ class ArticleList extends Component {
   };
 
   handleInputChange = (event) => {
-    const { value, name } = event.target;
-    this.setState({ [name]: value });
-  };
+    const lookup = {
+      "newest first": { sort_by: "created_at", order: "desc" },
+      "oldest first": { sort_by: "created_at", order: "asc" },
+      "most comments": { sort_by: "comment_count", order: "desc" },
+      "least comments": { sort_by: "comment_count", order: "asc" },
+      "most votes": { sort_by: "votes", order: "desc" },
+      "least votes": { sort_by: "votes", order: "asc" },
+    };
+    const { value } = event.target;
+    const { sort_by, order } = lookup[value];
+    this.setState({ sort_by, order });
 
-  handleInputSubmit = (event) => {
-    event.preventDefault();
-    const { topic } = this.props;
-    const { sort_by, order, limit, p } = this.state;
-    this.fetchArticles(topic, sort_by, order, limit, p);
+    const { topic, author } = this.props;
+    const { limit, p } = this.state;
+    this.fetchArticles(topic, author, sort_by, order, limit, p);
     this.setState({ p: 1 });
   };
 
