@@ -1,49 +1,40 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import * as api from "../utils/api";
 
-class Vote extends Component {
-  state = {
-    optimisticVotes: 0,
-  };
+const Vote = ({ votes, username, author, id, type }) => {
+  const [optimisticVotes, setOptimisticVotes] = useState(0);
 
-  render() {
-    const { votes, username, author } = this.props;
-    const { optimisticVotes } = this.state;
-    return (
-      <div className="content__vote">
-        <div className="content__vote__buttons">
-          <button
-            onClick={() => {
-              this.handleClick(1);
-            }}
-            disabled={optimisticVotes > 0 || username === author}
-          >
-            ↑
-          </button>
-          <button
-            onClick={() => {
-              this.handleClick(-1);
-            }}
-            disabled={optimisticVotes < 0 || username === author}
-          >
-            ↓
-          </button>
-        </div>
-        <h4 className="content__vote__text">
-          &#123; votes: {votes + optimisticVotes} &#125;
-        </h4>
-      </div>
-    );
-  }
-
-  handleClick = (votes) => {
-    const { id, type } = this.props;
+  const handleClick = (votes) => {
     const voteObj = { inc_votes: votes };
     api.patchVote(type, id, voteObj);
-    this.setState((currentState) => {
-      return { optimisticVotes: currentState.optimisticVotes + votes };
-    });
+    setOptimisticVotes((optimisticVotes) => optimisticVotes + votes);
   };
-}
+
+  return (
+    <div className="content__vote">
+      <div className="content__vote__buttons">
+        <button
+          onClick={() => {
+            handleClick(1);
+          }}
+          disabled={optimisticVotes > 0 || username === author}
+        >
+          ↑
+        </button>
+        <button
+          onClick={() => {
+            handleClick(-1);
+          }}
+          disabled={optimisticVotes < 0 || username === author}
+        >
+          ↓
+        </button>
+      </div>
+      <h4 className="content__vote__text">
+        &#123; votes: {votes + optimisticVotes} &#125;
+      </h4>
+    </div>
+  );
+};
 
 export default Vote;

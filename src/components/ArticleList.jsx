@@ -1,125 +1,40 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import * as api from "../utils/api";
 import Loading from "../components/Loading";
 import ArticleSort from "./ArticleSort";
 import Error from "../components/Error";
 import ArticleTitleLink from "./ArticleTitleLink";
 
-class ArticleList extends Component {
-  state = {
-    articles: [],
-    totalArticles: 0,
-    isLoading: true,
-    sort_by: "created_at",
-    order: "desc",
-    p: 1,
-    limit: 10,
-    error: null,
-  };
+const ArticleList = ({ topic, author }) => {
+  const [articles, setArticles] = useState([]);
+  const [totalArticles, setTotalArticles] = useState(0);
+  const [isLoading, setLoading] = useState(true);
+  const [sort_by, setSortBy] = useState("created_at");
+  const [order, setOrder] = useState("desc");
+  const [p, setP] = useState(1);
+  const [limit] = useState(10);
+  const [error, setError] = useState(null);
 
-  componentDidMount = () => {
-    const { topic, author } = this.props;
-    const { sort_by, order, limit, p } = this.state;
-    this.fetchArticles(topic, author, sort_by, order, limit, p);
-  };
+  useEffect(() => {
+    fetchArticles(topic, author, sort_by, order, limit, p);
+  }, [topic, p, sort_by, author, limit, order]);
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.topic !== prevProps.topic) {
-      const { topic, author } = this.props;
-      const { sort_by, order, limit } = this.state;
-      this.setState({ p: 1 });
-      this.fetchArticles(topic, author, sort_by, order, limit, 1);
-    } else if (
-      this.state.p !== prevState.p ||
-      this.state.sort_by !== prevState.sort_by
-    ) {
-      const { topic, author } = this.props;
-      const { sort_by, order, limit, p } = this.state;
-      this.fetchArticles(topic, author, sort_by, order, limit, p);
-    }
-  };
-
-  render() {
-    const {
-      articles,
-      total_count,
-      isLoading,
-      sort_by,
-      order,
-      limit,
-      p,
-      error,
-    } = this.state;
-    if (isLoading) {
-      return <Loading />;
-    }
-    if (error) {
-      const { status, msg } = this.state.error;
-      return <Error status={status} msg={msg} />;
-    }
-    return (
-      <div className="content__container">
-        <section className="content__title__section">
-          <ArticleSort
-            sort_by={sort_by}
-            order={order}
-            handleInputChange={this.handleInputChange}
-            handleInputSubmit={this.handleInputSubmit}
-          />
-        </section>
-        <ul className="content__articlelist">
-          {articles.map((article) => {
-            const { title, votes, comment_count, article_id } = article;
-            return (
-              <ArticleTitleLink
-                article_id={article_id}
-                comment_count={comment_count}
-                title={title}
-                votes={votes}
-                key={article_id}
-              />
-            );
-          })}
-        </ul>
-        <section className="content__pages">
-          <h4>page {p}</h4>
-          <button
-            onClick={() => {
-              this.handleButtonClick(-1);
-            }}
-            disabled={p < 2}
-          >
-            ←
-          </button>
-          <button
-            onClick={() => {
-              this.handleButtonClick(1);
-            }}
-            disabled={p * limit >= total_count}
-          >
-            →
-          </button>
-        </section>
-      </div>
-    );
-  }
-
-  fetchArticles = (topic, author, sort_by, order, limit, p) => {
+  const fetchArticles = (topic, author, sort_by, order, limit, p) => {
     api
       .getArticles(topic, author, sort_by, order, limit, p)
       .then(({ articles, total_count }) => {
-        this.setState({ articles, isLoading: false, total_count });
+        setArticles(articles);
+        setLoading(false);
+        setTotalArticles(total_count);
       })
       .catch(({ response }) => {
         const { status, data } = response;
-        this.setState({
-          error: { status: status, msg: data.message },
-          isLoading: false,
-        });
+        setError({ status, msg: data.message });
+        setLoading(false);
       });
   };
 
-  handleInputChange = (event) => {
+  const handleInputChange = (event) => {
     const lookup = {
       "newest first": { sort_by: "created_at", order: "desc" },
       "oldest first": { sort_by: "created_at", order: "asc" },
@@ -130,14 +45,66 @@ class ArticleList extends Component {
     };
     const { value } = event.target;
     const { sort_by, order } = lookup[value];
-    this.setState({ sort_by, order, p: 1 });
+    setSortBy(sort_by);
+    setOrder(order);
+    setP(1);
   };
 
-  handleButtonClick = (num) => {
-    this.setState(({ p }) => {
-      return { p: p + num };
-    });
+  const handleButtonClick = (num) => {
+    setP((p) => p + num);
   };
-}
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (error) {
+    const { status, msg } = error;
+    return <Error status={status} msg={msg} />;
+  }
+  return (
+    <div className="content__container">
+      <section className="content__title__section">
+        <ArticleSort
+          sort_by={sort_by}
+          order={order}
+          handleInputChange={handleInputChange}
+        />
+      </section>
+      <ul className="content__articlelist">
+        {articles.map((article) => {
+          const { title, votes, comment_count, article_id } = article;
+          return (
+            <ArticleTitleLink
+              article_id={article_id}
+              comment_count={comment_count}
+              title={title}
+              votes={votes}
+              key={article_id}
+            />
+          );
+        })}
+      </ul>
+      <section className="content__pages">
+        <h4>page {p}</h4>
+        <button
+          onClick={() => {
+            handleButtonClick(-1);
+          }}
+          disabled={p < 2}
+        >
+          ←
+        </button>
+        <button
+          onClick={() => {
+            handleButtonClick(1);
+          }}
+          disabled={p * limit >= totalArticles}
+        >
+          →
+        </button>
+      </section>
+    </div>
+  );
+};
 
 export default ArticleList;

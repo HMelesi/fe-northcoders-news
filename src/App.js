@@ -1,6 +1,6 @@
 import "./App.css";
 import { Router } from "@reach/router";
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Error from "./components/Error.jsx";
 import NavBar from "./components/NavBar.jsx";
 import Homepage from "./components/Homepage";
@@ -12,76 +12,55 @@ import Footer from "./components/Footer";
 import CreateArticle from "./components/CreateArticle";
 import UserPage from "./components/UserPage";
 import * as api from "./utils/api";
+import * as hooks from "./hooks/hooks";
 
-class App extends Component {
-  state = {
-    user: {
-      username: "jessjelly",
-      avatar_url:
-        "https://s-media-cache-ak0.pinimg.com/564x/39/62/ec/3962eca164e60cf46f979c1f57d4078b.jpg",
-      name: "Jess Jelly",
-    },
-    topics: [],
-  };
+const App = () => {
+  const [user, setUser] = hooks.useLocalStorage("user", {
+    username: "jessjelly",
+    avatar_url:
+      "https://s-media-cache-ak0.pinimg.com/564x/39/62/ec/3962eca164e60cf46f979c1f57d4078b.jpg",
+    name: "Jess Jelly",
+  });
+  const [topics, setTopics] = useState([]);
 
-  componentDidMount = () => {
-    this.fetchTopics();
-    if (localStorage.user !== undefined) {
-      this.setState({ user: JSON.parse(localStorage.user) });
-    }
-  };
+  useEffect(() => {
+    api.getTopics().then((topics) => {
+      setTopics(topics);
+    });
+    setUser(user);
+  }, [user, setUser]);
 
-  render() {
-    return (
-      <div className="App">
-        <header className="header">
-          <HeaderText />
-          <LoggedIn
-            user={this.state.user}
-            handleUserChange={this.handleUserChange}
-            handleUserSubmit={this.handleUserSubmit}
-          />
-        </header>
-        <NavBar topics={this.state.topics} />
-        <Router className="content">
-          <Homepage path="/" />
-          <TopicPage path="/topics/:topic" />
-          <UserPage path="/users/:author" />
-          <IndividualArticle
-            path="/articles/:article_id"
-            user={this.state.user}
-          />
-          <CreateArticle
-            path="/user/createarticle"
-            user={this.state.user}
-            topics={this.state.topics}
-          />
-          <Error
-            default
-            status={404}
-            msg={"the page you are looking for does not seem to exist"}
-          />
-        </Router>
-        <footer>
-          <Footer />
-        </footer>
-      </div>
-    );
-  }
-
-  handleUserChange = (event) => {
+  const handleUserChange = (event) => {
     const { value } = event.target;
     api.getUser(value).then((user) => {
-      this.setState({ user });
-      window.localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
     });
   };
 
-  fetchTopics = () => {
-    api.getTopics().then((topics) => {
-      this.setState({ topics });
-    });
-  };
-}
+  return (
+    <div className="App">
+      <header className="header">
+        <HeaderText />
+        <LoggedIn user={user} handleUserChange={handleUserChange} />
+      </header>
+      <NavBar topics={topics} />
+      <Router className="content">
+        <Homepage path="/" />
+        <TopicPage path="/topics/:topic" />
+        <UserPage path="/users/:author" />
+        <IndividualArticle path="/articles/:articleid" user={user} />
+        <CreateArticle path="/user/createarticle" user={user} topics={topics} />
+        <Error
+          default
+          status={404}
+          msg={"the page you are looking for does not seem to exist"}
+        />
+      </Router>
+      <footer>
+        <Footer />
+      </footer>
+    </div>
+  );
+};
 
 export default App;

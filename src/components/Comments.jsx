@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import * as api from "../utils/api";
 import Loading from "./Loading";
 import AddComment from "./AddComment";
@@ -6,160 +6,122 @@ import { convertDate } from "../utils/utils";
 import Vote from "./Vote";
 import Error from "../components/Error";
 
-class Comments extends Component {
-  state = {
-    comments: [],
-    isLoading: true,
-    optimisticComments: 0,
-    limit: 10,
-    p: 1,
-    error: null,
-  };
+const Comments = ({ comment_count, user, article_id }) => {
+  const [comments, setComments] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [optimisticComments, setOptimisticComments] = useState(0);
+  const [limit] = useState(10);
+  const [p, setP] = useState(1);
+  const [error, setError] = useState(null);
 
-  componentDidMount = () => {
-    this.fetchComments();
-  };
+  const { username } = user;
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (this.state.p !== prevState.p) {
-      this.fetchComments();
-    }
-  };
-
-  render() {
-    const {
-      comments,
-      isLoading,
-      optimisticComments,
-      p,
-      error,
-      limit,
-    } = this.state;
-    const { comment_count } = this.props;
-    const { username } = this.props.user;
-    if (isLoading) {
-      return <Loading />;
-    }
-    if (error) {
-      const { status, msg } = this.state.error;
-      return <Error status={status} msg={msg} />;
-    }
-    return (
-      <div className="content__comments">
-        <p className="content__comments__title">
-          &#123; comments: {+comment_count + optimisticComments} &#125;
-        </p>
-        <a href="#addcomment">
-          <button className="button__link__red">add comment</button>
-        </a>
-
-        <ul className="content__comments__list">
-          {comments.map((comment) => {
-            const { author, votes, created_at, body, comment_id } = comment;
-            return (
-              <li className="content__comments__list__comment" key={comment_id}>
-                <h3>&lt; {author} /&gt;</h3>
-                <h4>{convertDate(created_at)}</h4>
-
-                {username === author ? (
-                  <>
-                    <button onClick={this.handleDeleteClick} value={comment_id}>
-                      delete comment
-                    </button>
-                  </>
-                ) : null}
-                <Vote
-                  votes={votes}
-                  id={comment_id}
-                  username={username}
-                  author={author}
-                  type="comment"
-                />
-
-                <p>{body}</p>
-              </li>
-            );
-          })}
-        </ul>
-        <section className="content__pages">
-          <h4>page {p}</h4>
-          <button
-            onClick={() => {
-              this.handleButtonClick(-1);
-            }}
-            disabled={p < 2}
-          >
-            ←
-          </button>
-          <button
-            onClick={() => {
-              this.handleButtonClick(1);
-            }}
-            disabled={p * limit >= comment_count}
-          >
-            →
-          </button>
-        </section>
-        <section id="addcomment">
-          <AddComment
-            user={this.props.user}
-            addNewComment={this.addNewComment}
-          />
-        </section>
-      </div>
-    );
-  }
-
-  fetchComments = () => {
-    const { article_id } = this.props;
-    const { limit, p } = this.state;
+  useEffect(() => {
     api
       .getArticleComments(article_id, limit, p)
       .then((comments) => {
-        this.setState({ comments, isLoading: false });
+        setComments(comments);
+        setLoading(false);
       })
       .catch(({ response }) => {
         const { status, data } = response;
-        this.setState({
-          error: { status: status, msg: data.message },
-          isLoading: false,
-        });
+        setError({ status, msg: data.message });
+        setLoading(false);
       });
-  };
+  }, [p, article_id, limit]);
 
-  addNewComment = (comment) => {
-    const { article_id } = this.props;
+  const addNewComment = (comment) => {
     api.postArticleComment(article_id, comment).then((comment) => {
-      this.setState(({ comments, optimisticComments }) => {
-        return {
-          comments: [comment, ...comments],
-          optimisticComments: optimisticComments + 1,
-        };
-      });
+      setComments([comment, ...comments]);
+      setOptimisticComments((optimisticComments) => optimisticComments + 1);
     });
   };
 
-  handleDeleteClick = (event) => {
+  const handleDeleteClick = (event) => {
     event.preventDefault();
     const { value } = event.target;
     api.deleteComment(value).then(() => {
-      this.setState(({ comments, optimisticComments }) => {
-        const deletedId = Number.parseInt(value);
-        const remainingComments = comments.filter(
-          (comment) => comment.comment_id !== deletedId
-        );
-        return {
-          comments: remainingComments,
-          optimisticComments: optimisticComments - 1,
-        };
-      });
+      const deletedId = Number.parseInt(value);
+      const remainingComments = comments.filter(
+        (comment) => comment.comment_id !== deletedId
+      );
+      setComments(remainingComments);
+      setOptimisticComments((optimisticComments) => optimisticComments - 1);
     });
   };
-  handleButtonClick = (num) => {
-    this.setState(({ p }) => {
-      return { p: p + num };
-    });
+
+  const handleButtonClick = (num) => {
+    setP((p) => p + num);
   };
-}
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (error) {
+    const { status, msg } = error;
+    return <Error status={status} msg={msg} />;
+  }
+  return (
+    <div className="content__comments">
+      <p className="content__comments__title">
+        &#123; comments: {+comment_count + optimisticComments} &#125;
+      </p>
+      <a href="#addcomment">
+        <button className="button__link__red">add comment</button>
+      </a>
+
+      <ul className="content__comments__list">
+        {comments.map((comment) => {
+          const { author, votes, created_at, body, comment_id } = comment;
+          return (
+            <li className="content__comments__list__comment" key={comment_id}>
+              <h3>&lt; {author} /&gt;</h3>
+              <h4>{convertDate(created_at)}</h4>
+
+              {username === author ? (
+                <>
+                  <button onClick={handleDeleteClick} value={comment_id}>
+                    delete comment
+                  </button>
+                </>
+              ) : null}
+              <Vote
+                votes={votes}
+                id={comment_id}
+                username={username}
+                author={author}
+                type="comment"
+              />
+
+              <p>{body}</p>
+            </li>
+          );
+        })}
+      </ul>
+      <section className="content__pages">
+        <h4>page {p}</h4>
+        <button
+          onClick={() => {
+            handleButtonClick(-1);
+          }}
+          disabled={p < 2}
+        >
+          ←
+        </button>
+        <button
+          onClick={() => {
+            handleButtonClick(1);
+          }}
+          disabled={p * limit >= comment_count}
+        >
+          →
+        </button>
+      </section>
+      <section id="addcomment">
+        <AddComment user={user} addNewComment={addNewComment} />
+      </section>
+    </div>
+  );
+};
 
 export default Comments;

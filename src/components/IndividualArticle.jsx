@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Comments from "./Comments";
 import * as api from "../utils/api";
 import Loading from "./Loading";
@@ -8,98 +8,92 @@ import Vote from "./Vote";
 import DeletedArticle from "../components/Deleted";
 import Error from "../components/Error";
 
-class IndividualArticle extends Component {
-  state = {
-    article: {},
-    isLoading: true,
-    deleted: false,
-    error: null,
-  };
+const IndividualArticle = ({ articleid, user }) => {
+  const [article, setArticle] = useState({});
+  const [isLoading, setLoading] = useState(true);
+  const [deleted, setDeleted] = useState(false);
+  const [error, setError] = useState(null);
 
-  componentDidMount = () => {
-    const { article_id } = this.props;
-    this.fetchArticle(article_id);
-  };
+  const { username } = user;
+  const {
+    title,
+    body,
+    topic,
+    author,
+    votes,
+    comment_count,
+    article_id,
+    created_at,
+  } = article;
 
-  render() {
-    const { username } = this.props.user;
-    const { article, isLoading, deleted, error } = this.state;
-    const {
-      title,
-      body,
-      topic,
-      author,
-      votes,
-      comment_count,
-      article_id,
-      created_at,
-    } = article;
-    if (deleted) {
-      return <DeletedArticle title={title} topic={topic} />;
-    }
-    if (error) {
-      const { status, msg } = this.state.error;
-      return <Error status={status} msg={msg} />;
-    }
-    if (isLoading) {
-      return <Loading />;
-    }
-    return (
-      <div className="content__container">
-        <Link to={`/topics/${topic}`} className="link__black">
-          <h3>&lt; {topic} /&gt;</h3>
-        </Link>
-        <h2 className="content__title">&lt; {title} /&gt;</h2>
-        <Link to={`/users/${author}`} className="link__red">
-          <h3>{author}</h3>
-        </Link>
-        <h4>{convertDate(created_at)}</h4>
-        {username === author ? (
-          <>
-            <button onClick={this.handleDeleteClick} value={article_id}>
-              delete article
-            </button>
-          </>
-        ) : null}
+  useEffect(() => {
+    fetchArticle(articleid);
+  }, [articleid]);
 
-        <Vote
-          votes={votes}
-          id={article_id}
-          username={username}
-          author={author}
-          type="article"
-        />
-        <p className="content__article__body">{body}</p>
-        <Comments
-          article_id={article_id}
-          comment_count={comment_count}
-          user={this.props.user}
-        />
-      </div>
-    );
-  }
-
-  fetchArticle = (article_id) => {
+  const fetchArticle = (article_id) => {
     api
       .getArticle(article_id)
       .then((article) => {
-        this.setState({ article, isLoading: false });
+        setArticle(article);
+        setLoading(false);
       })
       .catch(({ response }) => {
         const { status, data } = response;
-        this.setState({
-          error: { status: status, msg: data.message },
-          isLoading: false,
-        });
+        setError({ status: status, msg: data.message });
+        setLoading(false);
       });
   };
 
-  handleDeleteClick = (event) => {
+  const handleDeleteClick = (event) => {
     event.preventDefault();
     const { value } = event.target;
     api.deleteArticle(value);
-    this.setState({ deleted: true });
+    setDeleted(true);
   };
-}
+
+  if (deleted) {
+    return <DeletedArticle title={title} topic={topic} />;
+  }
+  if (error) {
+    const { status, msg } = error;
+    return <Error status={status} msg={msg} />;
+  }
+  if (isLoading) {
+    return <Loading />;
+  }
+  return (
+    <div className="content__container">
+      <Link to={`/topics/${topic}`} className="link__black">
+        <h3>&lt; {topic} /&gt;</h3>
+      </Link>
+      <h2 className="content__title">&lt; {title} /&gt;</h2>
+      <Link to={`/users/${author}`} className="link__red">
+        <h3>{author}</h3>
+      </Link>
+      <h4>{convertDate(created_at)}</h4>
+      {username === author ? (
+        <>
+          <button onClick={handleDeleteClick} value={article_id}>
+            delete article
+          </button>
+        </>
+      ) : null}
+
+      <Vote
+        votes={votes}
+        id={article_id}
+        username={username}
+        author={author}
+        type="article"
+      />
+      <p className="content__article__body">{body}</p>
+      <Comments
+        article_id={article_id}
+        comment_count={comment_count}
+        user={user}
+      />
+    </div>
+  );
+};
 
 export default IndividualArticle;
