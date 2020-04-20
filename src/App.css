@@ -192,38 +192,42 @@ option {
   color: #fe5f55;
 }
 
-.content__article__title {
-  background-color: #fe5f55;
-  color: white;
-  margin: 5px 0px 5px 0px;
-  padding: 0px 10px 0px 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-@media (max-width: 600px) {
-  .content__article__title__name {
-    font-size: 12pt;
-  }
-
-  .content__article__title__stats {
-    font-size: 10pt;
+@media (max-width: 800px) {
+  .content__article__title {
+    background-color: #fe5f55;
+    color: white;
+    margin: 5px 0px 5px 0px;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
   }
 }
 
-@media (min-width: 600px) {
-  .content__article__title__name {
-    max-width: 75%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+@media (min-width: 800px) {
+  .content__article__title {
+    background-color: #fe5f55;
+    color: white;
+    margin: 5px 0px 5px 0px;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
   }
+}
 
-  .content__article__title__stats {
-    max-width: 25%;
-  }
+.content__article__title__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content__article__title__stats {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 180px;
 }
 
 .content__vote {

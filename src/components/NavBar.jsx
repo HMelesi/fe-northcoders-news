@@ -10,13 +10,11 @@ const NavBar = ({ topics }) => {
           <ul className="navbar__list">
             {topics.map((topic) => {
               return (
-                <Link
-                  to={`/topics/${topic.slug}`}
-                  key={topic.slug}
-                  className="link__black"
-                >
-                  <li className="navbar__topic">&lt; {topic.slug} /&gt;</li>
-                </Link>
+                <li className="navbar__topic" key={topic.slug}>
+                  <Link to={`/topics/${topic.slug}`} className="link__black">
+                    &lt; {topic.slug} /&gt;
+                  </Link>
+                </li>
               );
             })}
           </ul>

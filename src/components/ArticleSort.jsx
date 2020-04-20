@@ -6,15 +6,17 @@ const ArticleSort = (props) => {
   return (
     <div>
       <form>
-        <label>sort by: </label>
-        <select className="content__select" onChange={handleInputChange}>
-          <option value="newest first">newest first</option>
-          <option value="oldest first">oldest first</option>
-          <option value="most comments">most comments</option>
-          <option value="least comments">least comments</option>
-          <option value="most votes">most votes</option>
-          <option value="least votes">least votes</option>
-        </select>
+        <label>
+          sort by:
+          <select className="content__select" onChange={handleInputChange}>
+            <option value="newest first">newest first</option>
+            <option value="oldest first">oldest first</option>
+            <option value="most comments">most comments</option>
+            <option value="least comments">least comments</option>
+            <option value="most votes">most votes</option>
+            <option value="least votes">least votes</option>
+          </select>
+        </label>
       </form>
     </div>
   );

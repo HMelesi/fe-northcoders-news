@@ -29,7 +29,10 @@ class ArticleList extends Component {
       const { sort_by, order, limit } = this.state;
       this.setState({ p: 1 });
       this.fetchArticles(topic, author, sort_by, order, limit, 1);
-    } else if (this.state.p !== prevState.p) {
+    } else if (
+      this.state.p !== prevState.p ||
+      this.state.sort_by !== prevState.sort_by
+    ) {
       const { topic, author } = this.props;
       const { sort_by, order, limit, p } = this.state;
       this.fetchArticles(topic, author, sort_by, order, limit, p);
@@ -127,12 +130,7 @@ class ArticleList extends Component {
     };
     const { value } = event.target;
     const { sort_by, order } = lookup[value];
-    this.setState({ sort_by, order });
-
-    const { topic, author } = this.props;
-    const { limit, p } = this.state;
-    this.fetchArticles(topic, author, sort_by, order, limit, p);
-    this.setState({ p: 1 });
+    this.setState({ sort_by, order, p: 1 });
   };
 
   handleButtonClick = (num) => {
